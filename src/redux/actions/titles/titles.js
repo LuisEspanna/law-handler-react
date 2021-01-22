@@ -2,10 +2,11 @@ import {types} from '../index';
 import {postData} from '../../../utils';
 import {setAlert} from '../ui/ui';
 
+import { URL_BASE } from '../../../urls';
 
 export const startUpload = (titles) => {
     return async ( dispatch ) => {
-        postData('/api/titles', titles)
+        postData(`${URL_BASE}/api/titles`, titles)
         .then(data => {
             //console.log(data);
             dispatch(setAlert(true,"Cambios guardados con éxito"));
@@ -16,7 +17,7 @@ export const startUpload = (titles) => {
 
 export const startLoadingTitles = () => {
     return async ( dispatch ) => {
-        fetch('/api/titles').then(res => {
+        fetch(`${URL_BASE}/api/titles`).then(res => {
             if(res.ok)return res.json();
         }).then(data => {
             dispatch( loadTitles( data ) );

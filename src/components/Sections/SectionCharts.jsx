@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import LineChart from "../../components/Chart/LineChart.jsx";
 
+import {URL_BASE} from '../../urls';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(3),
@@ -144,7 +146,7 @@ export default function SectionTitle() {
 
   useEffect(() => {
 
-    fetch("/api/visitors").then(res => {
+    fetch(`${URL_BASE}/api/visitors`).then(res => {
       if (res.ok) return res.json();
     }).then(res => {
       setDataDaily(getSimpleDailyVisits(res));
