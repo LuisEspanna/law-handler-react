@@ -26,6 +26,7 @@ export default function SectionTitle({title,showChildren}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const  {user}  = useSelector( state => state.users );
+  const loading    = useSelector( state => state.ui.main_loading );
 
   const onDeleteTitle = (id) =>{
     dispatch(removeTitle(id));
@@ -78,6 +79,7 @@ export default function SectionTitle({title,showChildren}) {
   }
 
   return (
+    !loading?
     <div className={classes.root}>
       {
         showChildren?<Multimedia data={title.multimedia}/>:null
@@ -115,6 +117,6 @@ export default function SectionTitle({title,showChildren}) {
       }
 
 
-    </div>
+    </div>:null
   );
 }
