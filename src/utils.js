@@ -87,6 +87,9 @@ export const searchByKeyword = (titles, search) => {
 
         //Titulos
         if(foundTitle)results.push({title, data: title});
+        else if(customSearch(title.descripcion, search)){
+            results.push({title, data: title});
+        }
 
         //Capitulos
         if(title.capitulos)
@@ -102,6 +105,9 @@ export const searchByKeyword = (titles, search) => {
             
             //Capitulos
             if(foundChapter)results.push({title, data: capitulo});
+            else if(customSearch(capitulo.descripcion, search)){
+                results.push({title, data: capitulo});
+            }
 
             //Articulos
             if(capitulo.articulos)
@@ -117,6 +123,10 @@ export const searchByKeyword = (titles, search) => {
                 
                 //Articulos
                 if(foundArticle)results.push({title, data: articulo});
+                else if(customSearch(articulo.descripcion, search)){
+                    results.push({title, data: articulo});
+                }
+
                 return articulo;
             });
 
@@ -125,6 +135,35 @@ export const searchByKeyword = (titles, search) => {
         return title;
     });
     return results;
+}
+
+
+
+function customSearch(origin, searchText){
+    let coincidence = 0;    
+
+    if(origin.indexOf(searchText)>0){
+        //console.log("Simple search: " + origin.indexOf(searchText));
+        return true;
+    }
+    else{
+        origin.split(" ").map(wordOrigin =>{
+            searchText.split(" ").map(wordSearch =>{
+                if(wordOrigin.toLowerCase() === wordSearch.toLowerCase() && wordSearch.length>4)
+                    coincidence += 1;
+                return wordSearch;
+            }); 
+            return wordOrigin;
+        });
+        
+        if(coincidence >0){
+            //console.log("Custom search: " + (coincidence));
+            return true;
+        }else{
+            //console.log("No results");
+            return false;
+        }
+    }
 }
 
 
